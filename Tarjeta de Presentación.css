@@ -1,4 +1,4 @@
-margin{
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -15,7 +15,7 @@ body{
     .card {
     position: relative;
     width: 250px;
-    max-width: 350px; /* Ajusta el tamaño máximo */
+    max-width: 250px; /* Ajusta el tamaño máximo */
     height: 350px;
     border-radius: 10px;
     margin: 20px; /* Espaciado alrededor de la tarjeta */
@@ -52,7 +52,7 @@ body{
     
     .card .content span{
     position: absolute;
-    width: 380px;
+    width: 350px;
     height: 200px;
     background: linear-gradient(to right, #376cb1, #5f82cc);
     transform: rotate(-35deg);
@@ -93,7 +93,7 @@ body{
         transition: 0.4s;
     }
     .card:hover .links {
-        right: -105px;
+        right: -40px;
         border-radius: 0 10px 10px 0;
         
     }
