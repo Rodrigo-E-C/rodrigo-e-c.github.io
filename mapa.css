@@ -1,0 +1,276 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to right, #00011F, #004A97, #00002D);
+}
+
+header {
+  margin: 4%;
+  font-size: 17px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: transparent; /* Ajusta esto según tus necesidades */
+  position: relative;
+}
+.encabezado {
+  display: flex;
+  flex-direction: row;
+}
+.encabezado  p {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 17px;
+  text-align: right;
+  display: block;
+  margin: 0;
+  padding: 0 4px;
+}
+.encabezado .p {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 17px;
+  color: #75ced6;
+}
+p {
+  margin: 0;
+  color: white;
+  font-size: 17px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+nav ul {
+  list-style: none; /* Elimina los puntos de la lista */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 20px; /* Espacio entre los enlaces */
+}
+
+nav ul li {
+  position: relative; /* Necesario para posicionar la línea */
+}
+
+nav ul li a {
+  text-decoration: none;
+  padding: 10px;
+  position: relative; /* Necesario para la línea */
+  color: white;
+  font-size: 16px;
+}
+
+nav ul li a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 50%;
+  background-color: #72e0ea;
+  transition: all 0.3s ease-out;
+}
+
+nav ul li a:hover::after {
+  width: 100%;
+  left: 0;
+}
+
+.menu-btn, .close-btn {
+  display: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: white;
+}
+
+.menu-btn {
+  display: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: white;
+}
+
+h2{
+    text-align: center;
+    border-top: 20px;
+    padding: 10px;
+    color: rgb(245, 238, 238);
+    font-size: 22px;
+}
+label{
+    color: aliceblue;
+}
+button{
+    text-align: center;
+    align-items: center;
+}
+#locationForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+
+}
+#locationForm label, #locationForm select {
+    width: 100%;
+    max-width: 300px;
+}
+#locationForm button {
+    width: 100%;
+    max-width: 300px;
+    margin-top: 10px;
+}
+#cobertura{
+    text-align: center;
+    margin-top: 20px;
+    font-weight: Arial;
+}
+#map {
+    height: 500px;
+    width: 100%;
+    margin-top: 20px; /* Ajusta el valor según sea necesario */
+}
+
+#provinciasConCobertura{
+color: green;
+}
+.cobertura-disponible {
+    background-color: green;
+    color: white;
+    padding: 10px;
+    margin-top: 10px;
+    text-align: center;
+}
+.cobertura-no-disponible {
+    background-color: red;
+    color: white;
+    padding: 10px;
+    margin-top: 10px;
+    text-align: center;
+}
+.cobertura-desconocida {
+    background-color: gray;
+    color: white;
+    padding: 10px;
+    margin-top: 10px;
+    text-align: center;
+}
+@media (max-width: 768px) {
+  .menu-btn {
+    display: block;
+    position: absolute; /* Cambia a posición absoluta para quedarse en el encabezado */
+    top: 5px;
+    right: 20px;
+    z-index: 1001; /* Asegura que el botón esté por encima del contenido */
+  }
+
+  .close-btn {
+    display: none;
+    position: absolute; /* Cambia a posición absoluta para quedarse en el encabezado */
+    top: 20px;
+    right: 20px;
+    z-index: 1002; /* Asegura que el botón esté por encima del contenido */
+  }
+
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8); /* Fondo semi-transparente */
+    backdrop-filter: blur(10px); /* Desenfoque de fondo */
+    display: none; /* Oculta el menú por defecto */
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+
+  nav.menu-open {
+    display: flex;
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 20px; /* Espacio entre las opciones */
+  }
+
+  nav ul li {
+    margin-bottom: 10px; /* Reducir el margen entre las opciones */
+    text-align: center;
+  }
+
+  nav ul li a {
+    font-size: 24px;
+    background: rgba(255, 255, 255, 0.1); /* Fondo semi-transparente para los enlaces */
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
+
+  .encabezado {
+    position: absolute;
+    text-align: left;
+    top: 5px;
+    margin: 1%;
+  }
+  h2{
+    margin-top: 5%;
+  }
+  .Datos{
+    margin-top: 10%;
+  }
+  .cobertura-disponible {
+    background-color: green;
+    color: white;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.cobertura-no-disponible {
+    background-color: red;
+    color: white;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+footer{
+margin-top: 4%;
+}
+}
+
+/* PIE DE PÁGINA */
+footer {
+  background-color: #1e4061;
+  color: white;
+  padding: 40px 0;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.footer-icons {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.footer-icons li {
+  display: inline-block;
+}
+
+.footer-icons a {
+  color: white;
+  font-size: 24px;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-icons a:hover {
+  color:#72e0ea; /* Cambia de color al pasar el ratón */
+}
+footer p {
+  margin-top: 10px;
+  text-align: center; /* Asegura que el texto esté centrado */
+  width: 100%; /* Asegura que el elemento ocupe todo el ancho del contenedor */
+}  

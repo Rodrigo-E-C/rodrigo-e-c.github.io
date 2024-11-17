@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página</title>
+    <link rel="stylesheet" href="mapa.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+    <header>
+        <div class="menu-btn">
+            <i class="fas fa-bars"></i>
+        </div>
+        <div class="encabezado">
+                <p>RED</p>  <p class="p">SOTECC</p>
+        </div>
+        <nav>
+            <ul class="menu">
+                <li><a href="Index.html">Inicio</a></li>
+                <li><a href="Productos.html">Productos</a></li>
+                <li><a href="Servicios.html">Servicios</a></li>
+                <li><a href="#Tercero">Sobre nosotros</a></li>
+                <li><a href="#Cuarto">Contactos</a></li>
+            </ul>
+            <div class="close-btn">
+                <i class="fas fa-times"></i>
+            </div>
+        </nav>
+    </header>
+    
+    <div class="Datos">
+    <h2>SELECCIONA TUS DATOS:</h2>
+    <form id="locationForm">
+        <label for="municipio">Municipio:</label>
+        <select id="municipio" name="municipio" required>
+            <option value="">Seleccione tu municipio</option>
+            <option value="Donato Guerra">Donato Guerra</option>
+            <option value="Villa de Allende">Villa de Allende</option>
+            <!-- Agrega más opciones según sea necesario -->
+        </select>
+        <label for="provincia">Provincia:</label>
+        <select id="provincia" name="provincia" required>
+            <option value="">Seleccione tu provincia</option>
+        </select>
+        <button type="submit">Mostrar Mapa</button>
+    </form>
+
+</div>
+    <div id="map"></div>
+    <p id="cobertura"></p>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // Definir listas de municipios y provincias con y sin cobertura
+        const municipiosConCobertura = ["Donato Guerra"];
+        const provinciasConCobertura = ["San Martín Obispo", "San Martín 2"];
+        const municipiosSinCobertura = ["Villa de Allende"];
+        const provinciasSinCobertura = ["San Felipe del Progreso", "San Martín 2"];
+        
+        // Definir provincias por municipio
+        const provinciasPorMunicipio = {
+            "Donato Guerra": ["San Martín Obispo", "San Martín 2"],
+            "Villa de Allende": ["San Felipe del Progreso"]
+        };
+    
+        // Definir coordenadas para cada municipio y provincia
+        const coordenadas = {
+            "Donato Guerra": [19.30833, -100.14167],
+            "San Martín Obispo": [19.30833, -100.14222],
+            "Villa de Allende": [19.375, -100.148],
+            "San Felipe del Progreso": [19.712938, -99.95272],
+            "San Martín 2": [19.316667, -100.101111]
+        };
+    
+        let map;
+        let currentMarker;
+        let currentCircle;
+
+        document.getElementById('municipio').addEventListener('change', function() {
+            actualizarProvincias(this.value);
+        });
+
+        document.getElementById('locationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const municipio = document.getElementById('municipio').value;
+            const provincia = document.getElementById('provincia').value;
+            mostrarMapa(municipio, provincia);
+        });
+
+        function actualizarProvincias(municipio) {
+            const provinciaSelect = document.getElementById('provincia');
+            provinciaSelect.innerHTML = '<option value="">Seleccione tu provincia</option>';
+            if (municipio && provinciasPorMunicipio[municipio]) {
+                provinciasPorMunicipio[municipio].forEach(provincia => {
+                    const option = document.createElement('option');
+                    option.value = provincia;
+                    option.textContent = provincia;
+                    provinciaSelect.appendChild(option);
+                });
+            }
+        }
+
+        function mostrarMapa(municipio, provincia) {
+            if (!map) {
+                map = L.map('map', {
+                    center: coordenadas[municipio],
+                    zoom: 12,
+                    dragging: false, // Desactivar arrastre
+                    touchZoom: false, // Desactivar zoom táctil
+                    scrollWheelZoom: false, // Desactivar zoom con la rueda del ratón
+                    doubleClickZoom: false, // Desactivar zoom con doble clic
+                    boxZoom: false // Desactivar zoom con caja de selección
+                });
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+            } else {
+                map.setView(coordenadas[municipio], 12);
+                if (currentMarker) {
+                    map.removeLayer(currentMarker);
+                }
+                if (currentCircle) {
+                    map.removeLayer(currentCircle);
+                }
+            }
+
+            // Habilitar zoom solo cuando se fuerza
+            map.on('mousedown', function (e) {
+                if (e.originalEvent.button === 1) { // Si se usa el botón central del ratón
+                    map.dragging.enable();
+                    map.touchZoom.enable();
+                    map.scrollWheelZoom.enable();
+                    map.doubleClickZoom.enable();
+                    map.boxZoom.enable();
+                }
+            });
+    
+            map.on('mouseup', function () {
+                map.dragging.disable();
+                map.touchZoom.disable();
+                map.scrollWheelZoom.disable();
+                map.doubleClickZoom.disable();
+                map.boxZoom.disable();
+            });
+    
+            currentMarker = L.marker(coordenadas[municipio]).addTo(map)
+                .bindPopup(`${municipio}`)
+                .openPopup();
+    
+            obtenerCobertura(municipio, provincia, map);
+        }
+    
+        function obtenerCobertura(municipio, provincia, map) {
+            let cobertura;
+            let color;
+            const coberturaElement = document.getElementById('cobertura');
+            coberturaElement.classList.remove('cobertura-disponible', 'cobertura-no-disponible', 'cobertura-desconocida');
+    
+            if (municipiosConCobertura.includes(municipio) && provinciasConCobertura.includes(provincia)) {
+                cobertura = "Cobertura disponible";
+                color = 'green';
+                coberturaElement.classList.add('cobertura-disponible');
+            } else if (municipiosSinCobertura.includes(municipio) || provinciasSinCobertura.includes(provincia)) {
+                cobertura = "Sin cobertura";
+                color = 'red';
+                coberturaElement.classList.add('cobertura-no-disponible');
+            } else {
+                cobertura = "Cobertura desconocida";
+                color = 'gray';
+                coberturaElement.classList.add('cobertura-desconocida');
+            }
+            coberturaElement.innerHTML = `<span>${cobertura}</span> en: ${provincia}, ${municipio}`;
+    
+            currentCircle = L.circle(coordenadas[municipio], {
+                color: color,
+                fillColor: color,
+                fillOpacity: 0.5,
+                radius: 2000 // Ajusta el radio según sea necesario
+            }).addTo(map);
+        }
+    </script>    
+
+    <script>
+        var navLinks = document.getElementById("navLinks");
+
+        function showMenu(){
+            navLinks.style.right = "0";
+        }
+        function hideMenu(){
+            navLinks.style.right = "-200px";
+        }
+    </script>
+    <script src="Productos.js"></script>
+   <footer>
+    <ul class="footer-icons">
+        <li><a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook"></i></a></li>
+        <li><a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a></li>
+        <li><a href="https://wa.me/1234567890" target="_blank"><i class="fab fa-whatsapp"></i></a></li>
+        <li><a href="mailto:correo@ejemplo.com"><i class="fas fa-envelope"></i></a></li>
+        <li><a href="tel:+1234567890"><i class="fas fa-phone"></i></a></li>
+    </ul>
+    <p>&copy; 2024 Red Sotecc. Todos los derechos reservados.</p>
+</footer>
+</body>
+</html>
