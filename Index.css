@@ -204,6 +204,9 @@ nav ul li a:hover::after {
     top: 17px;
     margin: 1%;
   }
+  .iconos{
+    margin-top: 8%;
+  }
 }
 
 @media (max-width: 480px) {
