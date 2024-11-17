@@ -49,7 +49,7 @@ p {
   margin: 2%;
 }
 
-.inicio_pagina{
+.inicio_pagina {
   font-size: 30px;
   text-align: center;
   margin: 4%;
@@ -62,7 +62,13 @@ p {
   border-radius: 10px;
   align-content: center; 
   margin-bottom: 8px;
+  transition: transform 0.3s ease; /* Transición suave para la transformación */
 }
+
+.inicio_pagina:hover {
+  transform: translateY(-15px); /* Mueve el elemento hacia arriba */
+}
+
 .dosdiv{
   font-size: 30px;
   text-align: center;
@@ -76,7 +82,11 @@ p {
   border-radius: 10px;
   align-content: center;
   margin-bottom: 8px;
-} 
+  transition: transform 0.3s ease; /* Transición suave para la transformación */
+}
+.dosdiv:hover {
+  transform: translateY(-15px); /* Mueve el elemento hacia arriba */
+}
 .tercerdiv{
   font-size: 30px;
   text-align: center;
@@ -90,8 +100,11 @@ p {
   border-radius: 10px;
   align-content: center;
   margin-bottom: 8px;
+  transition: transform 0.3s ease; /* Transición suave para la transformación */
 }
-
+.tercerdiv:hover {
+  transform: translateY(-15px); /* Mueve el elemento hacia arriba */
+}
 
 .parte2div {
   margin-top: 3%;
@@ -112,7 +125,12 @@ p {
   border-radius: 10px;
   align-content: center; 
   margin-bottom: 8px;
+  transition: transform 0.3s ease; /* Transición suave para la transformación */
 }
+.dos_pagina:hover {
+  transform: translateY(-15px); /* Mueve el elemento hacia arriba */
+}
+
 .tres_pagina {
   font-size: 30px;
   text-align: center;
@@ -126,7 +144,12 @@ p {
   border-radius: 10px;
   align-content: center; 
   margin-bottom: 8px;
+  transition: transform 0.3s ease; /* Transición suave para la transformación */
 }
+.tres_pagina:hover {
+  transform: translateY(-15px); /* Mueve el elemento hacia arriba */
+}
+
 .cuatro_pagina{
   font-size: 30px;
   text-align: center;
@@ -140,6 +163,10 @@ p {
   border-radius: 10px;
   align-content: center; 
   margin-bottom: 8px;
+  transition: transform 0.3s ease; /* Transición suave para la transformación */
+}
+.cuatro_pagina:hover {
+  transform: translateY(-15px); /* Mueve el elemento hacia arriba */
 }
 nav ul {
   list-style: none; /* Elimina los puntos de la lista */
@@ -477,6 +504,10 @@ nav ul li a:hover::after {
   border-radius: 10px;
   align-content: center; 
   margin-bottom: 2%;
+  transition: transform 0.3s ease; /* Transición suave para la transformación */
+}
+.unotres:hover {
+  transform: translateY(-15px); /* Mueve el elemento hacia arriba */
 }
 .unotres img{
   width: 300px;
@@ -511,6 +542,10 @@ nav ul li a:hover::after {
   border-radius: 10px;
   align-content: center; 
   margin-bottom: 2%;
+  transition: transform 0.3s ease; /* Transición suave para la transformación */
+}
+.dostres:hover {
+  transform: translateY(-15px); /* Mueve el elemento hacia arriba */
 }
 .dostres img{
   width: 300px;
@@ -543,6 +578,10 @@ nav ul li a:hover::after {
   background-color: #15c0cf;
   border-radius: 10px;
   align-content: center; 
+  transition: transform 0.3s ease; /* Transición suave para la transformación */
+}
+.trestres:hover {
+  transform: translateY(-15px); /* Mueve el elemento hacia arriba */
 }
 .trestres img{
   width: 300px;
@@ -585,6 +624,10 @@ nav ul li a:hover::after {
   margin-bottom: 4%;
   margin-right: 2%;
   margin-left: 2%;
+  transition: transform 0.3s ease; /* Transición suave para la transformación */
+}
+.cuatrotres:hover {
+  transform: translateY(-15px); /* Mueve el elemento hacia arriba */
 }
 .cuatrotres img{
   width: 300px;
@@ -618,6 +661,10 @@ nav ul li a:hover::after {
   margin-top: 2%;
   margin-left: 2%;
   margin-right: 2%;
+  transition: transform 0.3s ease; /* Transición suave para la transformación */
+}
+.cincotres:hover {
+  transform: translateY(-15px); /* Mueve el elemento hacia arriba */
 }
 .cincotres img{
   width: 300px;
@@ -662,7 +709,12 @@ nav ul li a:hover::after {
   margin-top: 2%;
   margin-left: 2%;
   margin-right: 2%;
+  transition: transform 0.3s ease; /* Transición suave para la transformación */
 }
+.seistres:hover {
+  transform: translateY(-15px); /* Mueve el elemento hacia arriba */
+}
+
 .seistres img{
   width: 300px;
   height: 200px;
@@ -694,7 +746,12 @@ nav ul li a:hover::after {
   margin-top: 2%;
   margin-left: 2%;
   margin-right: 2%;
+  transition: transform 0.3s ease; /* Transición suave para la transformación */
 }
+.sietetres:hover {
+  transform: translateY(-15px); /* Mueve el elemento hacia arriba */
+}
+
 .sietetres img{
   width: 300px;
   height: 200px;
