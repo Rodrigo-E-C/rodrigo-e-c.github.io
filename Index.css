@@ -187,7 +187,7 @@ nav ul li a:hover::after {
   }
 
   .empresa {
-    margin-top: 20%; /* Baja más el contenido al minimizar */
+    margin-top: 30%; /* Baja más el contenido al minimizar */
     width: 90%;
     text-align: left;
     padding-left: 2%; /* Reducir el margen izquierdo al minimizar */
