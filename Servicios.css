@@ -1,0 +1,313 @@
+* {
+    margin: 0;
+    padding: 0; /* Asegúrate de que el padding también esté en 0 */
+    box-sizing: border-box; /* Incluye el padding y el borde en el tamaño total */
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #00011F, #004A97, #00002D);
+    overflow-x: hidden; /* Evita el desbordamiento horizontal */
+}
+
+header {
+    margin: 0 4%; /* Ajusta márgenes uniformemente */
+    margin-top: 3%;
+    margin-bottom: 0;
+    font-size: 17px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent; /* Ajusta esto según tus necesidades */
+    position: relative;
+}
+
+.encabezado {
+    display: flex;
+    flex-direction: row;
+}
+
+.encabezado p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 17px;
+    text-align: right;
+    display: block;
+    margin: 0;
+    padding: 0 4px;
+}
+
+.encabezado .p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 17px;
+    color: #75ced6;
+}
+
+p {
+    margin: 0;
+    color: white;
+    font-size: 17px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+nav ul {
+    list-style: none; /* Elimina los puntos de la lista */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px; /* Espacio entre los enlaces */
+}
+
+nav ul li {
+    position: relative; /* Necesario para posicionar la línea */
+}
+
+nav ul li a {
+    text-decoration: none;
+    padding: 10px;
+    position: relative; /* Necesario para la línea */
+    color: white;
+    font-size: 16px;
+}
+
+nav ul li a::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: #5c60be;
+    transition: all 0.3s ease-out;
+}
+
+nav ul li a:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+.menu-btn, .close-btn {
+    display: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: white;
+}
+
+h1 {
+    margin-top: 3%;
+    color: white;
+    text-align: center;
+    padding-bottom: 1%;
+}
+
+h2 {
+    color: white;
+}
+
+.planes {
+    text-align: justify;
+    display: flex;
+    justify-content: center;
+    margin-top: 1%;
+    margin-bottom: 0;
+}
+
+.parte1, .parte2, .parte3 {
+    width: 350px;
+    margin: 2%;
+    font-size: 19px;
+    background: linear-gradient(to right, #303397, #336090);
+    border-radius: 5%;
+    transition: transform 0.3s ease; /* Transición suave para la transformación */
+}
+
+.parte1:hover, .parte2:hover, .parte3:hover {
+    transform: translateY(-15px); /* Mueve el elemento hacia arriba */
+}
+
+.parte1 img, .parte2 img, .parte3 img {
+    width: 270px;
+    height: 200px;
+    margin: 3%;
+    padding-top: 2%;
+    padding-left: 18%;
+    filter: invert(1); /* Invierte los colores: negro a blanco */
+}
+
+.parte1 h2, .parte2 h2, .parte3 h2 {
+    margin: 3%;
+    text-align: center;
+}
+
+.parte1 p, h2, .parte2 p, h2, .parte3 p, h2 {
+    margin: 3%;
+}
+
+.planes2 {
+    text-align: justify;
+    display: flex;
+    justify-content: center;
+    margin-top: 2%;
+    margin-bottom: 0;
+}
+
+.plan1, .plan2, .plan3 {
+    background: linear-gradient(to left, #303397, #336090);
+    border-radius: 5%;
+    width: 350px;
+    height: 430px;
+    text-align: center;
+    font-size: 20px;
+    margin: 1%;
+    transition: transform 0.3s ease; /* Transición suave para la transformación */
+}
+.plan1:hover, .plan2:hover, .plan3:hover {
+    transform: translateY(-15px); /* Mueve el elemento hacia arriba */
+}
+
+
+.plan1 h1, p, .plan2 h1, p, .plan3 h1, p {
+    margin: 2%;
+    padding: 6%;
+}
+
+.plan1 button, .plan2 button, .plan3 button {
+    width: 200px;
+    height: 35px;
+    border-radius: 8px;
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+    .menu-btn {
+        display: block;
+        position: absolute; /* Cambia a posición absoluta para quedarse en el encabezado */
+        top: 5px;
+        right: 20px;
+        z-index: 1001; /* Asegura que el botón esté por encima del contenido */
+    }
+
+    .close-btn {
+        display: block;
+        position: absolute; /* Cambia a posición absoluta para quedarse en el encabezado */
+        top: 20px;
+        right: 20px;
+        z-index: 1002; /* Asegura que el botón esté por encima del contenido */
+    }
+
+    nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8); /* Fondo semi-transparente */
+        backdrop-filter: blur(10px); /* Desenfoque de fondo */
+        display: none; /* Oculta el menú por defecto */
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    }
+
+    nav.menu-open {
+        display: flex;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 20px; /* Espacio entre las opciones */
+    }
+
+    nav ul li {
+        margin-bottom: 10px; /* Reducir el margen entre las opciones */
+        text-align: center;
+    }
+
+    nav ul li a {
+        font-size: 24px;
+        background: rgba(255, 255, 255, 0.1); /* Fondo semi-transparente para los enlaces */
+        padding: 10px 20px;
+        border-radius: 5px;
+    }
+
+    .planes, .planes2 {
+        padding-top: 10%;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    h1 {
+        padding-top: 10%;
+    }
+
+    /*RESPONSIVE IMAGENES Y DIVS */
+    .parte1, .parte2, .parte3 {
+        width: 90%;
+    }
+
+    .plan1, .plan2, .plan3 {
+        width: 90%;
+        height: 485px;
+    }
+
+    .parte1 img, .parte2 img, .parte3 img {
+        width: 280px;
+    height: 210px;
+        margin: 3%;
+        margin-top: 1%;
+        padding-left: 29%;
+        filter: invert(1); /* Invierte los colores: negro a blanco */
+    }
+
+    .plan1 button, .plan2 button, .plan3 button {
+        border-radius: 8px;
+    }
+
+    .encabezado {
+        position: absolute;
+        text-align: left;
+        top: 5px;
+        margin: 1%;
+    }
+}
+
+footer {
+    background-color: #1e4061;
+    color: white;
+    width: 100%;
+    padding: 40px 0;
+    text-align: center;
+    position: relative; /* Asegura que el footer esté en su lugar */
+}
+
+.footer-icons {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.footer-icons li {
+    display: inline-block;
+}
+
+.footer-icons a {
+    color: white;
+    font-size: 24px;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-icons a:hover {
+    color: #72e0ea; /* Cambia de color al pasar el ratón */
+}
+
+footer p {
+    margin-top: 10px;
+    margin-bottom: 0;
+    text-align: center; /* Asegura que el texto esté centrado */
+    padding: 0 10px; /* Añade un pequeño padding lateral si es necesario */
+}
