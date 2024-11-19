@@ -251,7 +251,7 @@ footer p {
     text-align: center; /* Centra el texto */
   }
   .h2 h2{ 
-    padding-top: 9%;
+    padding-top: 11%;
   }
   .arriba, .parte2div, .h21, .div2, .div3, .div4, .ultimaparte {
     flex-direction: column;
