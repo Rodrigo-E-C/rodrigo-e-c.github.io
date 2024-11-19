@@ -3,7 +3,7 @@ footer {
     color: white;
     padding: 40px 0;
     text-align: center;
-
+    position: relative; /* Asegura que el footer esté en su lugar */
   }
   
   .footer-icons {

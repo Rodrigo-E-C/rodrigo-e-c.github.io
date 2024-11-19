@@ -12,6 +12,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-start; /* Alinea el contenido en la parte superior */
+  overflow-x: hidden; /* Evita el desbordamiento horizontal */
 }
 
 header {
@@ -191,6 +192,7 @@ nav ul li a:hover::after {
     width: 90%;
     text-align: left;
     padding-left: 2%; /* Reducir el margen izquierdo al minimizar */
+    margin-bottom: 0;
   }
 
   .empresa p {
@@ -243,6 +245,7 @@ button {
   transition: 0.5s ease;
   user-select: none;
   width: 150px;
+  text-decoration: none;
 }
 
 button:hover {
