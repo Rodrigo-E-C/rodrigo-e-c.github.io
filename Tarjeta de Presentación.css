@@ -21,7 +21,9 @@ body{
     margin: 20px; /* Espaciado alrededor de la tarjeta */
     box-shadow: 2px 3px 5px rgba(73, 69, 52, 0.4);
     }
-    
+    h4{
+        margin-top: 4%;
+    }
     .card .content{
     position: relative;
     z-index: 100;
@@ -67,14 +69,15 @@ body{
     }
 
     .card .content h6{
-        font-size: 13px;
+        font-size: 14px;
         color: #1a161f;
-        margin-top: 10px;
+        margin-top: 5px;
     }
     .card .content p{
         font-size: 13px;
         color: #161518;
         margin-top: 10px;
+        text-align: center;
     }
 
     .card .links{

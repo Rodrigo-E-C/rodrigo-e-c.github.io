@@ -100,7 +100,27 @@ label{
 button{
     text-align: center;
     align-items: center;
+    border-radius: 10px; /* Ajusta el valor según tus necesidades */
+    padding: 5px; /* Espaciado interno */
+    outline: none; /* Elimina el contorno por defecto */
+    border: none;
+    /* Otros estilos que desees agregar */   
 }
+button:hover{
+background-color: #b5b5c2;
+    padding: 5px; /* Espaciado interno */
+    outline: none; /* Elimina el contorno por defecto */
+    border: none;
+    color: black;
+}
+.rounded-select {
+  border-radius: 10px; /* Ajusta el valor según tus necesidades */
+  border: 1px solid #ccc; /* Estilo del borde */
+  padding: 5px; /* Espaciado interno */
+  outline: none; /* Elimina el contorno por defecto */
+  /* Otros estilos que desees agregar */
+}
+
 #locationForm {
     display: flex;
     flex-direction: column;

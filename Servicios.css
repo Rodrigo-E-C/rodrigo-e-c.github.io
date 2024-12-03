@@ -78,7 +78,7 @@ nav ul li a::after {
     height: 2px;
     bottom: 0;
     left: 50%;
-    background-color: #5c60be;
+    background-color: #73b5fb;
     transition: all 0.3s ease-out;
 }
 
@@ -117,9 +117,13 @@ h2 {
     width: 350px;
     margin: 2%;
     font-size: 19px;
-    background: linear-gradient(to right, #303397, #336090);
+    background: linear-gradient(to right, #314f86, #1f5794);
     border-radius: 5%;
     transition: transform 0.3s ease; /* Transición suave para la transformación */
+    text-align: center;
+}
+.parte1 p, .parte2 p, .parte3 p{
+    text-align: justify;
 }
 
 .parte1:hover, .parte2:hover, .parte3:hover {
@@ -127,11 +131,11 @@ h2 {
 }
 
 .parte1 img, .parte2 img, .parte3 img {
-    width: 270px;
+    width: 190px;
     height: 200px;
-    margin: 3%;
-    padding-top: 2%;
-    padding-left: 18%;
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 2%;
     filter: invert(1); /* Invierte los colores: negro a blanco */
 }
 
@@ -177,6 +181,88 @@ h2 {
     height: 35px;
     border-radius: 8px;
 }
+/* From Uiverse.io by ArturCodeCraft */ 
+/* <reset-style> ============================ */
+.boton{
+    display: flex;
+    justify-content: center;
+}
+/* From Uiverse.io by mrhyddenn */ 
+button {
+    position: relative;
+    text-align: center;
+    border-radius: 7px;
+    border: 1px solid rgb(61, 106, 255);
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 2px;
+    background: transparent;
+    color: #fff;
+    overflow: hidden;
+    box-shadow: 0 0 0 0 transparent;
+    -webkit-transition: all 0.2s ease-in;
+    -moz-transition: all 0.2s ease-in;
+    transition: all 0.2s ease-in;
+  }
+  
+  button:hover {
+    background: rgb(99, 221, 240);
+    box-shadow: 0 0 30px 5px rgba(0, 142, 236, 0.815);
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out;
+    color: black;
+  }
+  
+  button:hover::before {
+    -webkit-animation: sh02 0.5s 0s linear;
+    -moz-animation: sh02 0.5s 0s linear;
+    animation: sh02 0.5s 0s linear;
+  }
+  
+  button::before {
+    content: '';
+    display: block;
+    width: 0px;
+    height: 86%;
+    position: absolute;
+    top: 7%;
+    left: 0%;
+    opacity: 0;
+    background: #fff;
+    box-shadow: 0 0 50px 30px #fff;
+    -webkit-transform: skewX(-20deg);
+    -moz-transform: skewX(-20deg);
+    -ms-transform: skewX(-20deg);
+    -o-transform: skewX(-20deg);
+    transform: skewX(-20deg);
+  }
+  
+  @keyframes sh02 {
+    from {
+      opacity: 0;
+      left: 0%;
+    }
+  
+    50% {
+      opacity: 1;
+    }
+  
+    to {
+      opacity: 0;
+      left: 100%;
+    }
+  }
+  
+  button:active {
+    box-shadow: 0 0 0 0 transparent;
+    -webkit-transition: box-shadow 0.2s ease-in;
+    -moz-transition: box-shadow 0.2s ease-in;
+    transition: box-shadow 0.2s ease-in;
+  }
+  
+
 
 /* Media Queries for Responsive Design */
 @media (max-width: 768px) {
@@ -244,6 +330,11 @@ h2 {
     /*RESPONSIVE IMAGENES Y DIVS */
     .parte1, .parte2, .parte3 {
         width: 90%;
+        text-align: center;
+    }
+    .parte1 p, .parte2 p, .parte3 p{
+        width: 90%;
+        text-align: justify;
     }
 
     .plan1, .plan2, .plan3 {
@@ -252,11 +343,10 @@ h2 {
     }
 
     .parte1 img, .parte2 img, .parte3 img {
-        width: 280px;
+        width: auto;
     height: 210px;
         margin: 3%;
         margin-top: 1%;
-        padding-left: 29%;
         filter: invert(1); /* Invierte los colores: negro a blanco */
     }
 
