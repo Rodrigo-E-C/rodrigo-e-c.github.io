@@ -302,7 +302,7 @@ button {
 
     nav ul {
         flex-direction: column;
-        gap: 20px; /* Espacio entre las opciones */
+        gap: 40px; /* Espacio entre las opciones */
     }
 
     nav ul li {
@@ -322,7 +322,9 @@ button {
         flex-direction: column;
         align-items: center;
     }
-
+footer{
+    margin-top: 2%;
+}
     h1 {
         padding-top: 10%;
     }

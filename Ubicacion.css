@@ -1,121 +1,59 @@
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0; /* Eliminar márgenes del body */
-    padding: 0;
-    overflow-x: hidden; /* Evita el desbordamiento horizontal */
-    background: linear-gradient(to right, #00011F, #004A97, #00002D);
-}
-
-header {
-    margin: 0 4%; /* Márgenes de 4% en las orillas */
-    margin-top: 3%;
-    margin-bottom: 0;
-    width: 92%; /* Ajusta el ancho para que quede dentro del margen */
-    font-size: 17px;
-    display: flex;
-    align-items: center;
-    background-color: transparent; /* Ajusta esto según tus necesidades */
-    position: relative;
-}
-
-.encabezado {
-    display: flex;
-    align-items: center; /* Alinea verticalmente el texto */
-    margin-right: auto; /* Empuja el menú hacia la derecha */
-}
-
-.encabezado p {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 17px;
-    text-align: left; /* Alinea el texto a la izquierda */
-    margin: 0;
-    padding: 0 4px;
-    color: white;
-}
-
-.encabezado .p {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 17px;
-    color: #75ced6;
-}
-
-.menu {
-    margin-top: 0%;
-    text-align: left; /* Alinea el menú a la izquierda */
-    width: auto; /* Ajusta el ancho del menú */
-}
-
-/* Eliminar los puntos de todas las listas */
-nav ul {
-    list-style: none; /* Elimina los puntos de la lista */
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: flex-start; /* Alinea los elementos a la izquierda */
-    gap: 20px; /* Espacio entre los enlaces */
-    flex-wrap: wrap; /* Permite que los enlaces se ajusten a la siguiente línea si es necesario */
-}
-
-nav ul li {
-    position: relative; /* Necesario para posicionar la línea */
-}
-
-nav ul li a {
-    text-decoration: none;
-    padding: 10px;
-    position: relative; /* Necesario para la línea */
-    color: white;
-    font-size: 16px;
-    text-align: left; /* Alinea el texto a la izquierda */
-}
-
-nav ul li a::after {
-    content: "";
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: 0;
-    left: 50%;
-    background-color: white;
-    transition: all 0.3s ease-out;
-}
-
-nav ul li a:hover::after {
-    width: 100%;
-    left: 0;
-}
-
-.iconos {
-    margin-top: 3%;
-    margin-bottom: 2px; /* Baja un poco más los iconos */
-    text-align: center;
-    padding: 20px 0;
-}
-
-.iconos a {
-    color: white;
-    margin: 0 8px;
-    font-size: 24px;
-    text-decoration: none;
-    transition: color 0.3s;
-}
-
-.iconos a:hover {
-    color: #72e0ea;
-}
-
-.menu-btn, .close-btn {
+/* Ocultar menú en móviles y mostrar menú tipo hamburguesa */
+.menu-container {
     display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 70%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+}
+footer{
+    margin-top: 1%;
+}
+.menu-container.active {
+    transform: translateX(0);
+}
+
+.menu-btn {
+    display: block;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1100;
+}
+
+.close-btn {
+    display: block;
+    position: absolute;
+    top: 20px;
+    right: 20px;
     cursor: pointer;
     font-size: 24px;
     color: white;
 }
 
-h1 {
-    color: white;
-    text-align: center;
-    margin-top: 3%;
+/* Ocultar el botón de menú hamburguesa en pantallas grandes */
+@media (min-width: 768px) {
+    .menu-btn,
+    .close-btn {
+        display: none;
+    }
+
+    .menu-container {
+        display: flex;
+        position: static;
+        transform: none;
+        width: auto;
+        height: auto;
+        background-color: transparent;
+        flex-direction: row;
+    }
 }
-footer{
-    margin-top: 2%;
-}
+
