@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo</title>
+    <link rel="stylesheet" href="Productos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="pie.css">
+    <style>
+                /* Carrito de compras */
+                #cart-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #2ef05b;
+            color: rgb(0, 0, 0);
+            border-radius: 50%;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        /* Contenedor del carrito */
+        #cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 50;
+    
+        }
+
+        #cart-overlay.active {
+            display: block;
+        }
+
+        #cart-container {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 350px;
+            background-color: #f9f9f9;
+            box-shadow: -4px 0 8px rgba(0, 0, 0, 0.1);
+            height: 95%;
+            overflow-y: scroll;
+            transition: transform 0.3s ease;
+            padding: 20px;
+            display: none;
+            z-index: 100;
+        }
+
+        #cart-container.active {
+
+            display: block;
+        }
+
+        #cart-container h3 {
+            margin: 0;
+            padding-bottom: 20px;
+            font-size: 24px;
+            text-align: left;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        #cart-container i{
+            margin-right: 1%;
+            width: 30px;
+            height: 30px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fafafa;
+        }
+
+        .cart-item p {
+            margin: 0;
+            text-align: center;
+        }
+
+        .cart-item button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 5px;
+            transition: background-color 0.3s;
+            width: 80px;
+        }
+
+        .cart-item button:hover {
+            background-color: #0056b3;
+        }
+
+        .cart-item input {
+            width: 50px;
+            text-align: center;
+            border: 1px solid #ccc;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        #cart-total {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: right;
+            text-align: center;
+        }
+
+        #cart-checkout {
+            display: block;
+            background-color: #28a745;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #cart-checkout:hover {
+            background-color: #218838;
+        }
+
+        /* Botón de cerrar carrito */
+        .close-cart-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            z-index: 101;
+            width: 30px;
+            height: 30px;
+        }
+
+        .close-cart-btn:hover {
+            background-color: #c82333;
+        }
+        .cart-item p:first-child { /* Nombre del producto */
+    font-size: 15px; /* Cambia este valor según lo que necesites */
+    font-weight: bold; /* Opcional: Haz el texto más grueso */
+    color: #333; /* Cambia el color si lo deseas */
+    text-align: left;
+    width: 90px;
+}
+
+.cart-item p:nth-child(2) { /* Precio del producto */
+    font-size: 15px; /* Cambia este valor según lo que necesites */
+    color: #555; /* Cambia el color si lo deseas */
+    text-align: right;
+}
+        /* Estilos del mensaje de "agregado al carrito" */
+        .added-message {
+    position: absolute;
+    bottom: 10px; /* Ajusta la posición vertical dentro del contenedor */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(39, 233, 21, 0.6);
+    color: rgb(0, 0, 0);
+    margin-bottom: 37%;
+    font-size: 14px;
+    border-radius: 5px;
+    padding: 5px 10px;
+    display: none; /* Oculto por defecto */
+    z-index: 10; /* Prioridad sobre otros elementos */
+}
+        .inicio_pagina,
+.dosdiv,
+.tercerdiv,
+.dos_pagina,
+.tres_pagina,
+.cuatro_pagina,
+.unotres,
+.dostres,
+.trestres,
+.cuatrotres,
+.cincotres,
+.seistres,
+.sietetres {
+    position: relative; /* Agregar posición relativa a cada contenedor de producto */
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="menu-btn">
+            <i class="fas fa-bars"></i>
+        </div>
+        <div class="encabezado">
+            <p>RED</p> <p class="p">SOTECC</p>
+        </div>
+        <nav>
+            <ul class="menu">
+                <li><a href="Index.html">Inicio</a></li>
+                <li><a href="Productos.html">Productos</a></li>
+                <li><a href="Servicios.html">Servicios</a></li>
+                <li><a href="Ubicación.html">Ubicación</a></li>
+            </ul>
+            <div class="close-btn">
+                <i class="fas fa-times"></i>
+            </div>
+        </nav>
+    </header>
+    
+     <!-- Icono del carrito -->
+     <div id="cart-icon">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="cart-count">0</span>
+    </div>
+
+    <!-- Overlay para el carrito -->
+    <div id="cart-overlay"></div>
+
+    <!-- Contenedor del carrito -->
+    <div id="cart-container">
+        <button class="close-cart-btn" id="close-cart-btn">&times;</button>
+        <h3><i class="fas fa-shopping-cart"></i>Carrito de Compras </h3>
+        <div id="cart-items"></div>
+        <div id="cart-total">Total: $0</div>
+        <a href="#" id="cart-checkout">Pagar</a>
+    </div>
+    
+    <div class="h2">
+        <h2>SISTEMAS SOLARES</h2>
+    </div>
+    <div class="arriba">
+        <div class="inicio_pagina">
+            <img src="IMAGENES DEL CATALOGO/img1.png" alt="Panel 01">
+            <span class="added-message">¡Agregado al carrito!</span> <!-- Mensaje de agregado -->
+            <h2>PANEL 01</h2>
+            <p>$5000</p>
+            <button class="button-producto" type="button" data-price="5000" data-name="PANEL 01"><span>Comprar</span></button>
+        </div>
+        <div class="dosdiv">
+            <img src="IMAGENES DEL CATALOGO/img2.png" alt="Panel 02">
+            <span class="added-message">¡Agregado al carrito!</span> <!-- Mensaje de agregado -->
+            <h2>PANEL 02</h2>
+            <p>$5000</p>
+            <button class="button-producto" type="button" data-price="5000" data-name="PANEL 02"><span>Comprar</span></button>
+        </div>
+        <div class="tercerdiv">
+            <img src="IMAGENES DEL CATALOGO/img3.png" alt="Panel 03">
+            <span class="added-message">¡Agregado al carrito!</span> <!-- Mensaje de agregado -->
+            <h2>PANEL 03</h2>
+            <p>$5000</p>
+            <button class="button-producto" type="button" data-price="5000" data-name="PANEL 03"><span>Comprar</span></button>
+        </div>
+    </div>
+    
+    <div class="h21">
+        <h2>REDES DE COMUNICACIÓN</h2>
+    </div>
+    <div class="parte2div">
+        <div class="dos_pagina">
+            <img src="IMAGENES DEL CATALOGO/img4.png" alt="Wish 03">
+            <span class="added-message">¡Agregado al carrito!</span> <!-- Mensaje de agregado -->
+            <h2>WISH 03</h2>
+            <p>$5000</p>
+            <button class="button-producto" type="button" data-price="5000" data-name="WISH 03"><span>Comprar</span></button>
+        </div>
+        <div class="tres_pagina">
+            <img src="IMAGENES DEL CATALOGO/img5.png" alt="Antena 01">
+            <span class="added-message">¡Agregado al carrito!</span> <!-- Mensaje de agregado -->
+            <h2>ANTENA 01</h2>
+            <p>$5000</p>
+            <button class="button-producto" type="button" data-price="5000" data-name="ANTENA 01"><span>Comprar</span></button>
+        </div>
+        <div class="cuatro_pagina">
+            <img src="IMAGENES DEL CATALOGO/img6.png" alt="Antena 02">
+            <span class="added-message">¡Agregado al carrito!</span> <!-- Mensaje de agregado -->
+            <h2>ANTENA 02</h2>
+            <p>$5000</p>
+            <button class="button-producto" type="button" data-price="5000" data-name="ANTENA 02"><span>Comprar</span></button>
+        </div>
+    </div>
+    <div class="div2">
+        <h2>LECTORES DE HUELLA</h2>
+    </div>
+    <div class="div3">
+        <div class="unotres">
+            <img src="IMAGENES DEL CATALOGO/img7.png" alt="Lector 01">
+            <span class="added-message">¡Agregado al carrito!</span> <!-- Mensaje de agregado -->
+            <h2>LECTOR 01</h2>
+            <p>$5000</p>
+            <button class="button-producto" type="button" data-price="5000" data-name="LECTOR 01"><span>Comprar</span></button>
+        </div>
+        <div class="dostres">
+            <img src="IMAGENES DEL CATALOGO/img8.png" alt="Lector 02">
+            <span class="added-message">¡Agregado al carrito!</span> <!-- Mensaje de agregado -->
+            <h2>LECTOR 02</h2>
+            <p>$5000</p>
+            <button class="button-producto" type="button" data-price="5000" data-name="LECTOR 02"><span>Comprar</span></button>
+        </div>
+        <div class="trestres">
+            <img src="IMAGENES DEL CATALOGO/img9.png" alt="Lector 03">
+            <span class="added-message">¡Agregado al carrito!</span> <!-- Mensaje de agregado -->
+            <h2>LECTOR 03</h2>
+            <p>$5000</p>
+            <button class="button-producto" type="button" data-price="5000" data-name="LECTOR 03"><span>Comprar</span></button>
+        </div>
+    </div>
+    <div class="div4">
+        <div class="cuatrotres">
+            <img src="IMAGENES DEL CATALOGO/img10.png" alt="Lector 04">
+            <span class="added-message">¡Agregado al carrito!</span> <!-- Mensaje de agregado -->
+            <h2>LECTOR 04</h2>
+            <p>$5000</p>
+            <button class="button-producto" type="button" data-price="5000" data-name="LECTOR 04"><span>Comprar</span></button>
+        </div>
+        <div class="cincotres">
+            <img src="IMAGENES DEL CATALOGO/img11.png" alt="Lector 05">
+            <span class="added-message">¡Agregado al carrito!</span> <!-- Mensaje de agregado -->
+            <h2>LECTOR 05</h2>
+            <p>$5000</p>
+            <button class="button-producto" type="button" data-price="5000" data-name="LECTOR 05"><span>Comprar</span></button>
+        </div>
+    </div>
+    <div class="div3R">
+        <h2>SISTEMAS DE VIGILANCIA</h2>
+    </div>
+    <div class="ultimaparte">
+        <div class="seistres">
+            <img src="IMAGENES DEL CATALOGO/img12.png" alt="Cámara 01">
+            <span class="added-message">¡Agregado al carrito!</span> <!-- Mensaje de agregado -->
+            <h2>CÁMARA 01</h2>
+            <p>$5000</p>
+            <button class="button-producto" type="button" data-price="5000" data-name="CÁMARA 01"><span>Comprar</span></button>
+        </div>
+        <div class="sietetres">
+            <img src="IMAGENES DEL CATALOGO/img13.png" alt="Cámara 02">
+            <span class="added-message">¡Agregado al carrito!</span> <!-- Mensaje de agregado -->
+            <h2>CÁMARA 02</h2>
+            <p>$5000</p>
+            <button class="button-producto" type="button" data-price="5000" data-name="CÁMARA 02"><span>Comprar</span></button>
+        </div>
+    </div>
+    <footer>
+        <ul class="footer-icons">
+            <li><a href="https://www.facebook.com/share/14c7TfTkUm/" target="_blank"><i class="fab fa-facebook"></i></a></li>
+            <li><a href="https://wa.me/5545143549" target="_blank"><i class="fab fa-whatsapp"></i></a></li>
+            <li><a href="mailto:sotecc2019@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a></li>
+            <li><a href="tel:+527261104460" target="_blank"><i class="fas fa-phone"></i></a></li>
+        </ul>
+        <p>&copy; 2024 Red Sotecc. Todos los derechos reservados.</p>
+    </footer>
+    <script>
+        // Variables
+        const cart = [];
+        const cartCount = document.getElementById('cart-count');
+        const cartIcon = document.getElementById('cart-icon');
+        const cartOverlay = document.getElementById('cart-overlay');
+        const cartContainer = document.getElementById('cart-container');
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartTotal = document.getElementById('cart-total');
+        const cartCheckout = document.getElementById('cart-checkout');
+        const closeCartBtn = document.getElementById('close-cart-btn');
+        const cartMessage = document.createElement('p'); // Mensaje cuando no haya productos en el carrito
+    
+        // Mostrar el carrito
+        cartIcon.addEventListener('click', () => {
+            cartContainer.classList.toggle('active');
+            cartOverlay.classList.toggle('active');
+            updateCartDisplay();  // Actualizamos la vista cada vez que el carrito se abre
+        });
+    
+        // Cerrar el carrito
+        cartOverlay.addEventListener('click', () => {
+            cartContainer.classList.remove('active');
+            cartOverlay.classList.remove('active');
+        });
+    
+        closeCartBtn.addEventListener('click', () => {
+            cartContainer.classList.remove('active');
+            cartOverlay.classList.remove('active');
+        });
+    
+        // Función para agregar un producto al carrito
+        document.querySelectorAll('.button-producto').forEach(button => {
+            button.addEventListener('click', function() {
+                const productName = this.getAttribute('data-name');
+                const productPrice = parseFloat(this.getAttribute('data-price'));
+    
+                // Mostrar el mensaje de "Agregado al carrito"
+                const productDiv = this.closest('div'); // Encuentra el contenedor del producto
+                const message = productDiv.querySelector('.added-message');
+                message.style.display = 'block';
+    
+                // Ocultar el mensaje después de 3 segundos
+                setTimeout(() => {
+                    message.style.display = 'none';
+                }, 2000);
+    
+                addToCart(productName, productPrice);
+            });
+        });
+    
+        function addToCart(name, price) {
+            // Verificar si el producto ya está en el carrito
+            const existingProduct = cart.find(item => item.name === name);
+            if (existingProduct) {
+                existingProduct.quantity++;
+            } else {
+                cart.push({ name, price, quantity: 1 });
+            }
+            updateCartDisplay();
+        }
+    
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartDisplay();
+        }
+    
+        function updateCartDisplay() {
+            // Actualizar el número de productos en el carrito
+            cartCount.textContent = cart.length;
+    
+            // Mostrar los productos en el carrito
+            cartItemsContainer.innerHTML = '';
+            let total = 0;
+    
+            // Si no hay productos, muestra el mensaje
+            if (cart.length === 0) {
+                cartMessage.textContent = 'No hay productos seleccionados en el carrito.';
+                cartMessage.style.textAlign = 'center';
+                cartItemsContainer.appendChild(cartMessage);
+                cartTotal.style.display = 'none';
+                cartCheckout.style.display = 'none';
+            } else {
+                // Limpiar el mensaje si hay productos
+                cartMessage.textContent = '';
+                cartItemsContainer.appendChild(cartMessage);
+    
+                cart.forEach((item, index) => {
+                    const cartItem = document.createElement('div');
+                    cartItem.classList.add('cart-item');
+                    cartItem.innerHTML = `
+                        <p>${item.name}</p>
+                        <p>$${item.price}</p>
+                        <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${index}, this.value)">
+                        <button onclick="removeFromCart(${index})">Eliminar</button>
+                    `;
+                    cartItemsContainer.appendChild(cartItem);
+                    total += item.price * item.quantity;
+                });
+    
+                // Mostrar total y botón de pagar
+                cartTotal.textContent = `Total: $${total.toFixed(2)}`;
+                cartTotal.style.display = 'block';
+                cartCheckout.style.display = 'block';
+            }
+        }
+    
+        function updateQuantity(index, quantity) {
+            cart[index].quantity = parseInt(quantity);
+            updateCartDisplay();
+        }
+    
+        // Inicializar el carrito vacío con el mensaje adecuado
+        updateCartDisplay();
+    </script>
+    
+    <script src="Productos.js"></script>
+</body>
+</html>

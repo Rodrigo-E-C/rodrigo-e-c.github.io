@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        #cart-items {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            color: rgb(0, 0, 0);
+            background-color: white;
+        }
+        #cart-items li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .button-eliminar {
+            background-color: #ff4c4c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .button-eliminar:hover {
+            background-color: #e63946;
+        }
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        #back-button {
+            background-color: #007bff;
+            color: white;
+        }
+        #back-button:hover {
+            background-color: #0056b3;
+        }
+        #pay-button {
+            background-color: #28a745;
+            color: white;
+        }
+        #pay-button:hover {
+            background-color: #218838;
+        }
+        .centrar {
+            display: flex;
+            justify-content: center;
+        }
+        .contenido {
+            width: 500px;
+        }
+        .centrar_ticket {
+            display: flex;
+            justify-content: center;
+            margin-top: 5%;
+        }
+        .ticket-container {
+            width: 300px;
+            padding: 10px;
+            background-color: #f8f8f8;
+            border: 1px solid #ccc;
+            display: none; /* Ocultamos el ticket inicialmente */
+        }
+        .ticket-title {
+            font-weight: bold;
+            text-align: center;
+        }
+        .ticket-item {
+            margin: 7px;
+            font-size: 14px;
+            text-align: center;
+        }
+        .ticket {
+            margin-top: 5%;
+            font-size: 15px;
+            text-align: center;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Carrito de Compras</h1>
+    <div class="centrar">
+        <div class="contenido">
+            <center><ol id="cart-items"></ol></center>
+            <center><p><strong>Total:</strong> $<span id="total-price">0</span></p></center>
+        </div>
+    </div>
+    <div class="actions">
+        <button id="back-button">Regresar</button>
+        <button id="pay-button">Pagar</button>
+    </div>
+    <div class="centrar_ticket">
+        <div class="ticket-container" id="ticket-container">
+            <div class="ticket-title">Ticket de Compra</div>
+            <div id="ticket-items"></div>
+            <div class="ticket">Total: $<span id="ticket-total">0</span></div>
+        </div>
+    </div>
+    <script>
+        // Recuperar datos del carrito desde localStorage
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartItemsElement = document.getElementById('cart-items');
+        const totalPriceElement = document.getElementById('total-price');
+
+        let totalPrice = 0;
+
+        // Mostrar productos en el carrito
+        cart.forEach((item, index) => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                ${item.product} - $${item.price}
+                <button class="button-eliminar" onclick="eliminarProducto(${index})">Eliminar</button>
+            `;
+            cartItemsElement.appendChild(li);
+            totalPrice += parseFloat(item.price);
+        });
+
+        // Mostrar precio total
+        totalPriceElement.innerText = totalPrice.toFixed(2);
+
+        // Eliminar producto por índice
+        function eliminarProducto(index) {
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            window.location.reload(); // Recargar la página para reflejar los cambios
+        }
+
+        // Manejar botón "Regresar"
+        document.getElementById('back-button').addEventListener('click', () => {
+            window.location.href = 'Productos.html'; // Redirigir sin borrar datos
+        });
+
+        // Manejar botón "Pagar"
+        document.getElementById('pay-button').addEventListener('click', () => {
+            generarTicket();
+        });
+
+        // Generar ticket de compra
+        function generarTicket() {
+            const ticketItemsElement = document.getElementById('ticket-items');
+            const ticketTotalElement = document.getElementById('ticket-total');
+
+            // Limpiar el contenido del ticket previo
+            ticketItemsElement.innerHTML = '';
+
+            // Mostrar los elementos comprados
+            cart.forEach(item => {
+                const ticketItem = document.createElement('div');
+                ticketItem.classList.add('ticket-item');
+                ticketItem.innerHTML = `${item.product} - $${item.price}`;
+                ticketItemsElement.appendChild(ticketItem);
+            });
+
+            // Mostrar el total en el ticket
+            ticketTotalElement.innerText = totalPrice.toFixed(2);
+
+            // Mostrar el contenedor del ticket
+            document.getElementById('ticket-container').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

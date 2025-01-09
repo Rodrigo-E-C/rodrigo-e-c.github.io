@@ -1,16 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport "content="width-device-width,initial-scale=1.0"><!--ajusta el contenido a diferentes tamaños de pantalla-->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"><!--nos indica el motor de uso-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"><!--ajustar el contenido al tamaño del dispositivo, facilita que los usuarios lean y naveguen por el sitio sin necesidad de hacer zoom o desplazarse horizontalmente.-->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
     <title>Página Dual</title>
     <link rel="stylesheet" href="Productos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="pie.css">
+    <style>
+        /* Estilos para el carrito flotante */
+        #cart {
+            width: 300px; /* Ancho del carrito */
+            max-height: 400px; /* Altura máxima del carrito */
+            overflow-y: auto; /* Habilitar desplazamiento vertical */
+            border: 1px solid #ccc; /* Borde del carrito */
+            padding: 10px; /* Espaciado interno */
+            background-color: white; /* Color de fondo */
+            position: fixed; /* Fijar el carrito en la pantalla */
+            top: 20%; /* Distancia desde la parte superior */
+            right: 20px; /* Distancia desde la derecha */
+            z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
+            display: none; /* Ocultar inicialmente */
+        }
+        #cart-toggle {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+        }
+        #cart-items {
+            font-size: 16px;
+        }
+        /* Estilos para el botón de eliminar en el carrito */
+        #cart .button-eliminar {
+            background-color: rgb(79, 216, 223);
+            color: rgb(0, 0, 0);
+            width: auto; /* Ajusta el ancho automáticamente */
+            height: 23px;
+            font-size: 13px;
+            margin-top: 2%;
+            border-radius: 5px; /* Bordes redondeados */
+            text-align: center;
+            margin-left: 10px; /* Espacio a la izquierda */
+        }
+        #cart .button-eliminar:hover {
+            background-color: rgb(24, 85, 88); /* Color al pasar el mouse */
+            color: white;
+        }
+        .productosseleccTEXT {
+            font-size: 15px;
+            margin-top: 0;
+        }
+        .cerrarypagar {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        /* Estilos para el mini ticket */
+        #mini-ticket {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f8f8f8;
+            display: none; /* Ocultar inicialmente */
+            text-align: center;
+        }
+        /* Estilo para el botón de cerrar (X) */
+        .close-cart {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            color: #333;
+        }
+        /* Estilo para la opción de compra terminada */
+        .comprar-terminada {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: rgb(79, 216, 223);
+            color: black;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none; /* Ocultar inicialmente */
+        }
+        .comprar-terminada:hover {
+            background-color: rgb(24, 85, 88); /* Color al pasar el mouse */
+            color: white;
+        }
+    </style>
 </head>
 <body>
 <header>
@@ -18,7 +100,7 @@
         <i class="fas fa-bars"></i>
     </div>
     <div class="encabezado">
-            <p>RED</p>  <p class="p">SOTECC</p>
+        <p>RED</p> <p class="p">SOTECC</p>
     </div>
     <nav>
         <ul class="menu">
@@ -33,52 +115,76 @@
     </nav>
 </header>
 
+<div id="cart">
+    <span class="close-cart" id="cart-close"><i class="fas fa-times"></i></span> <!-- Ícono para cerrar el carrito -->
+    <center><h2>Carrito de Compras</h2></center>
+    <center><p class="productosseleccTEXT">PRODUCTOS SELECCIONADOS:</p></center>
+    <center><ol id="cart-items"></ol></center>
+    <center><p>Total: <span id="total-price">$0</span></p></center>
+    <div class="cerrarypagar">
+        <center><button id="pay-button">Pagar</button></center> <!-- Botón de Pagar -->
+    </div>
+    
+    <!-- Mini Ticket dentro del carrito -->
+    <div id="mini-ticket">
+        <h3>Mini Ticket</h3>
+        <ol id="mini-ticket-items"></ol>
+        <p><strong>Total Acumulado:</strong> <br>$<span id="mini-ticket-total">0</span></p>
+    </div>
+    
+    <!-- Botón "Compra Terminada" fuera del mini ticket -->
+    <div class="comprar-terminada" id="complete-purchase">Compra Terminada</div> <!-- Opción para finalizar compra -->
+</div>
+
+<div id="cart-toggle">
+    <i class="fas fa-shopping-cart"></i>
+</div>
+
 <div class="h2">
-<h2>SISTEMAS SOLARES</h2>
+    <h2>SISTEMAS SOLARES</h2>
 </div>
 <div class="arriba">
-    
     <div class="inicio_pagina">
-        <img src="IMAGENES DEL CATALOGO/img1.png">
+        <img src="IMAGENES DEL CATALOGO/img1.png" alt="Panel 01">
         <h2>PANEL 01</h2>
         <p>$5000</p>
-        <button type="submit"><span>Comprar</span></button>
+        <button class="button-producto" type="button" data-price="5000"><span>Comprar</span></button>
     </div>
     <div class="dosdiv">
-       <img src="IMAGENES DEL CATALOGO/img2.png">
-       <h2>PANEL 02</h2>
-       <p>$5000</p>
-       <button type="submit"><span>Comprar</span></button>
+        <img src="IMAGENES DEL CATALOGO/img2.png" alt="Panel 02">
+        <h2>PANEL 02</h2>
+        <p>$5000</p>
+        <button class="button-producto" type="button" data-price="5000"><span>Comprar</span></button>
     </div>
     <div class="tercerdiv">
-        <img src="IMAGENES DEL CATALOGO/img3.png">
+        <img src="IMAGENES DEL CATALOGO/img3.png" alt="Panel 03">
         <h2>PANEL 03</h2>
         <p>$5000</p>
-        <button type="submit"><span>Comprar</span></button>
+        <button class="button-producto" type="button" data-price="5000"><span>Comprar</span></button>
     </div>
 </div>
 
 <div class="h21">
-<h2>REDES DE COMUNICACIÓN</h2>
+    <h2>REDES DE COMUNICACIÓN</h2>
 </div>
 <div class="parte2div">
     <div class="dos_pagina">
-        <img src="IMAGENES DEL CATALOGO/img4.png">
+        <img src="IMAGENES DEL CATALOGO/img4.png" alt="Wish 03">
         <h2>WISH 03</h2>
         <p>$5000</p>
-        <button type="submit"><span>Comprar</span></button>
+        <button class="button-producto" type="button" data-price="5000"><span>Comprar</span></button>
     </div>
     <div class="tres_pagina">
-        <img src="IMAGENES DEL CATALOGO/img5.png">
+        <img src="IMAGENES DEL CATALOGO/img5.png" alt="Antena 01">
         <h2>ANTENA 01</h2>
         <p>$5000</p>
-        <button type="submit"><span>Comprar</span></button>
+        <button class="button-producto" type="button" data-price="5000"><span>Comprar</span></button>
     </div>
     <div class="cuatro_pagina">
-        <img src="IMAGENES DEL CATALOGO/img6.png">
+        <img src="IMAGENES DEL CATALOGO/img6.png" alt="Antena 02">
         <h2>ANTENA 02</h2>
         <p>$5000</p>
-        <button type="submit"><span>Comprar</span></button>
+        <button class="button-producto" type="button" data-price="5000"><span>Comprar</span></button>
     </div>
 </div>
 <div class="div2">
@@ -86,64 +192,200 @@
 </div>
 <div class="div3">
     <div class="unotres">
-        <img src="IMAGENES DEL CATALOGO/img7.png">
+        <img src="IMAGENES DEL CATALOGO/img7.png" alt="Lector 01">
         <h2>LECTOR 01</h2>
         <p>$5000</p>
-        <button type="submit"><span>Comprar</span></button>
+        <button class="button-producto" type="button" data-price="5000"><span>Comprar</span></button>
     </div>
     <div class="dostres">
-        <img src="IMAGENES DEL CATALOGO/img8.png">
+        <img src="IMAGENES DEL CATALOGO/img8.png" alt="Lector 02">
         <h2>LECTOR 02</h2>
         <p>$5000</p>
-        <button type="submit"><span>Comprar</span></button>
+        <button class="button-producto" type="button" data-price="5000"><span>Comprar</span></button>
     </div>
     <div class="trestres">
-        <img src="IMAGENES DEL CATALOGO/img9.png">
+        <img src="IMAGENES DEL CATALOGO/img9.png" alt="Lector 03">
         <h2>LECTOR 03</h2>
         <p>$5000</p>
-        <button type="submit"><span>Comprar</span></button>
+        <button class="button-producto" type="button" data-price="5000"><span>Comprar</span></button>
     </div>
 </div>
 <div class="div4">
     <div class="cuatrotres">
-    <img src="IMAGENES DEL CATALOGO/img10.png">
-    <h2>LECTOR 04</h2>
-    <p>$5000</p>
-    <button type="submit"><span>Comprar</span></button>
-</div>
-<div class="cincotres">
-    <img src="IMAGENES DEL CATALOGO/img11.png">
-    <h2>LECTOR 05</h2>
-    <p>$5000</p>
-    <button type="submit"><span>Comprar</span></button>
-</div>
+        <img src="IMAGENES DEL CATALOGO/img10.png" alt="Lector 04">
+        <h2>LECTOR 04</h2>
+        <p>$5000</p>
+        <button class="button-producto" type="button" data-price="5000"><span>Comprar</span></button>
+    </div>
+    <div class="cincotres">
+        <img src="IMAGENES DEL CATALOGO/img11.png" alt="Lector 05">
+        <h2>LECTOR 05</h2>
+        <p>$5000</p>
+        <button class="button-producto" type="button" data-price="5000"><span>Comprar</span></button>
+    </div>
 </div>
 <div class="div3R">
     <h2>SISTEMAS DE VIGILANCIA</h2>
 </div>
 <div class="ultimaparte">
     <div class="seistres">
-        <img src="IMAGENES DEL CATALOGO/img12.png">
+        <img src="IMAGENES DEL CATALOGO/img12.png" alt="Cámara 01">
         <h2>CÁMARA 01</h2>
         <p>$5000</p>
-        <button type="submit"><span>Comprar</span></button>
+        <button class="button-producto" type="button" data-price="5000"><span>Comprar</span></button>
     </div>
     <div class="sietetres">
-        <img src="IMAGENES DEL CATALOGO/img13.png">
+        <img src="IMAGENES DEL CATALOGO/img13.png" alt="Cámara 02">
         <h2>CÁMARA 02</h2>
         <p>$5000</p>
-        <button type="submit"><span>Comprar</span></button>
+        <button class="button-producto" type="button" data-price="5000"><span>Comprar</span></button>
     </div>
 </div>
 <footer>
     <ul class="footer-icons">
-        <li><a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook"></i></a></li>
-        <li><a href="https://wa.me/1234567890" target="_blank"><i class="fab fa-whatsapp"></i></a></li>
-        <li><a href="mailto:correo@ejemplo.com" target="_blank"><i class="fas fa-envelope"></i></a></li>
-        <li><a href="tel:+1234567890" target="_blank"><i class="fas fa-phone"></i></a></li>
+        <li><a href="https://www.facebook.com/share/14c7TfTkUm/" target="_blank"><i class="fab fa-facebook"></i></a></li>
+        <li><a href="https://wa.me/5545143549" target="_blank"><i class="fab fa-whatsapp"></i></a></li>
+        <li><a href="mailto:sotecc2019@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a></li>
+        <li><a href="tel:+527261104460" target="_blank"><i class="fas fa-phone"></i></a></li>
     </ul>
     <p>&copy; 2024 Red Sotecc. Todos los derechos reservados.</p>
 </footer>
-<script src="Productos.js"></script>
+<script>
+    // Clase Carrito
+    class Carrito {
+        constructor() {
+            this.items = JSON.parse(localStorage.getItem('cart')) || [];
+            this.actualizarCarrito();
+        }
+
+        agregarProducto(producto) {
+            this.items.push(producto);
+            this.guardarCarrito();
+            this.actualizarCarrito();
+        }
+
+        guardarCarrito() {
+            localStorage.setItem('cart', JSON.stringify(this.items));
+        }
+
+        actualizarCarrito() {
+            const cartItemsElement = document.getElementById('cart-items');
+            const miniTicketItemsElement = document.getElementById('mini-ticket-items');
+            const totalPriceElement = document.getElementById('total-price');
+            const miniTicketTotalElement = document.getElementById('mini-ticket-total');
+            cartItemsElement.innerHTML = '';
+            miniTicketItemsElement.innerHTML = '';
+            let totalPrice = 0;
+
+            this.items.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `${item.product} - $${item.price} <button class="button-eliminar" onclick="carrito.eliminarProducto(${index})">Eliminar</button>`;
+                cartItemsElement.appendChild(li);
+                
+                // Mini ticket
+                const miniLi = document.createElement('li');
+                miniLi.innerText = `${item.product} - $${item.price}`;
+                miniTicketItemsElement.appendChild(miniLi);
+                
+                totalPrice += parseFloat(item.price);
+            });
+
+            totalPriceElement.innerText = `$${totalPrice.toFixed(2)}`;
+            miniTicketTotalElement.innerText = totalPrice.toFixed(2);
+
+            // Ocultar el botón "Compra Terminada" inicialmente
+            document.getElementById('complete-purchase').style.display = 'none';
+        }
+
+        eliminarProducto(index) {
+            this.items.splice(index, 1);
+            this.guardarCarrito();
+            this.actualizarCarrito();
+        }
+
+        reiniciarCarrito() {
+            this.items = [];
+            this.guardarCarrito();
+            this.actualizarCarrito();
+        }
+    }
+
+    const carrito = new Carrito();
+
+    // Manejar clics en los botones de "Comprar"
+    document.querySelectorAll('.button-producto').forEach(button => {
+        button.addEventListener('click', () => {
+            const product = button.parentElement.querySelector('h2').innerText;
+            const price = button.getAttribute('data-price');
+            carrito.agregarProducto({ product, price });
+
+            // Crear el mensaje de confirmación
+            const confirmationMessage = document.createElement('div');
+            confirmationMessage.innerText = `${product} añadido al carrito`;
+            confirmationMessage.style.position = 'absolute';
+            confirmationMessage.style.top = '50%'; 
+            confirmationMessage.style.left = '50%'; 
+            confirmationMessage.style.transform = 'translate(-50%, -50%)'; 
+            confirmationMessage.style.backgroundColor = 'rgba(0, 0, 0, 0.7)'; 
+            confirmationMessage.style.color = 'white';
+            confirmationMessage.style.padding = '5px 10px';
+            confirmationMessage.style.borderRadius = '5px';
+            confirmationMessage.style.fontSize = '14px';
+            confirmationMessage.style.textAlign = 'center';
+            confirmationMessage.style.zIndex = '1000';
+            confirmationMessage.style.transition = 'opacity 0.5s';
+            confirmationMessage.style.opacity = '1';
+
+            const productImageContainer = button.parentElement;
+            productImageContainer.style.position = 'relative'; 
+            productImageContainer.appendChild(confirmationMessage);
+
+            setTimeout(() => {
+                confirmationMessage.style.opacity = '0';
+                setTimeout(() => {
+                    confirmationMessage.remove();
+                }, 500);
+            }, 2000);
+        });
+    });
+
+    // Mostrar/ocultar el carrito
+    document.getElementById('cart-toggle').addEventListener('click', () => {
+        const cart = document.getElementById('cart');
+        cart.style.display = cart.style.display === 'none' || cart.style.display === '' ? 'block' : 'none';
+    });
+
+    // Cerrar el carrito
+    document.getElementById('cart-close').addEventListener('click', () => {
+        document.getElementById('cart').style.display = 'none';
+    });
+
+    // Manejar el botón "Pagar"
+    document.getElementById('pay-button').addEventListener('click', () => {
+        // Mostrar el mini ticket
+        document.getElementById('mini-ticket').style.display = 'block';
+
+        // Mostrar el botón "Compra Terminada"
+        document.getElementById('complete-purchase').style.display = 'block';
+    });
+
+    // Manejar la opción "Compra Terminada"
+    document.getElementById('complete-purchase').addEventListener('click', () => {
+        carrito.reiniciarCarrito(); // Reiniciar el carrito
+        document.getElementById('mini-ticket').style.display = 'none'; // Ocultar el mini ticket
+        document.getElementById('complete-purchase').style.display = 'none'; // Ocultar el botón "Compra Terminada"
+    });
+
+
+    //MENU HAMBURGUESA: 
+document.querySelector('.menu-btn').addEventListener('click', () => {
+    const nav = document.querySelector('nav');
+    nav.classList.toggle('menu-open'); // Alterna la clase para mostrar/ocultar el menú
+});
+
+document.querySelector('.close-btn').addEventListener('click', () => {
+    document.querySelector('nav').classList.remove('menu-open'); // Cierra el menú
+});
+</script>
 </body>
 </html>

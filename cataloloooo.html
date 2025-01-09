@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta name="viewport" content="width-device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
+    <title>Red Sotecc - Productos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #0e2a47;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .encabezado {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .menu {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+
+        .menu a:hover {
+            color: #ffd700;
+        }
+
+        /* Product Section Styles */
+        .h2, .h21, .div2, .div3R {
+            text-align: center;
+            margin: 2rem 0;
+            color: #0e2a47;
+            font-size: 1.5rem;
+        }
+
+        .arriba, .parte2div, .div3, .div4, .ultimaparte {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 1rem;
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+
+        /* Product Card Styles */
+        .inicio_pagina, .dosdiv, .tercerdiv, .dos_pagina, .tres_pagina, .cuatro_pagina,
+        .unotres, .dostres, .trestres, .cuatrotres, .cincotres, .seistres, .sietetres {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .inicio_pagina:hover, .dosdiv:hover, .tercerdiv:hover {
+            transform: translateY(-5px);
+        }
+
+        img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            color: #333;
+            margin: 0.5rem 0;
+        }
+
+        p {
+            color: #0e2a47;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
+        }
+
+        button {
+            background: #0e2a47;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #1a4a80;
+        }
+
+        /* Cart Styles */
+        .cart-icon {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #fff;
+            padding: 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .cart-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff0000;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 50%;
+        }
+
+        .cart-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+            transition: right 0.3s ease;
+            z-index: 1001;
+        }
+
+        .cart-panel.active {
+            right: 0;
+        }
+
+        .cart-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #0e2a47;
+            color: white;
+        }
+
+        .cart-items {
+            padding: 20px;
+            overflow-y: auto;
+            max-height: calc(100vh - 200px);
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+        }
+
+        .cart-item-details {
+            flex-grow: 1;
+            padding: 0 15px;
+        }
+
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cart-footer {
+            padding: 20px;
+            border-top: 1px solid #eee;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: white;
+        }
+
+        .total {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 10px;
+            background: #0e2a47;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .checkout-btn:hover {
+            background: #1a4a80;
+        }
+
+        .quantity-btn {
+            background: none;
+            border: 1px solid #ddd;
+            padding: 2px 8px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .quantity-btn:hover {
+            background: #f5f5f5;
+        }
+
+        .remove-item {
+            color: #ff0000;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        /* Footer Styles */
+        footer {
+            background: #0e2a47;
+            color: white;
+            padding: 2rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .footer-icons {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-icons a {
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .menu {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .cart-panel {
+                width: 100%;
+                right: -100%;
+            }
+
+            .cart-icon {
+                top: 10px;
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="encabezado">
+            <p>RED</p><p class="p">SOTECC</p>
+        </div>
+        <nav>
+            <ul class="menu">
+                <li><a href="Index.html">Inicio</a></li>
+                <li><a href="Productos.html">Productos</a></li>
+                <li><a href="Servicios.html">Servicios</a></li>
+                <li><a href="Ubicación.html">Ubicación</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Cart Icon -->
+    <div class="cart-icon">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count">0</span>
+    </div>
+
+    <!-- Cart Panel -->
+    <div class="cart-panel">
+        <div class="cart-header">
+            <h3>Carrito de Compras</h3>
+            <button class="close-cart"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items">
+            <!-- Items will be added here dynamically -->
+        </div>
+        <div class="cart-footer">
+            <div class="total">
+                <span>Total:</span>
+                <span class="total-amount">$0</span>
+            </div>
+            <button class="checkout-btn">Realizar Pedido</button>
+        </div>
+    </div>
+
+    <!-- Product Sections -->
+    <div class="h2">
+        <h2>SISTEMAS SOLARES</h2>
+    </div>
+    <div class="arriba">
+        <div class="inicio_pagina">
+            <img src="IMAGENES DEL CATALOGO/img1.png" alt="Panel Solar 1">
+            <h2>PANEL 01</h2>
+            <p>$5000</p>
+            <button type="submit"><span>Comprar</span></button>
+        </div>
+        <div class="dosdiv">
+            <img src="IMAGENES DEL CATALOGO/img2.png" alt="Panel Solar 2">
+            <h2>PANEL 02</h2>
+            <p>$5000</p>
+            <button type="submit"><span>Comprar</span></button>
+        </div>
+        <div class="tercerdiv">
+            <img src="IMAGENES DEL CATALOGO/img3.png" alt="Panel Solar 3">
+            <h2>PANEL 03</h2>
+            <p>$5000</p>
+            <button type="submit"><span>Comprar</span></button>
+        </div>
+    </div>
+
+    <div class="h21">
+        <h2>REDES DE COMUNICACIÓN</h2>
+    </div>
+    <div class="parte2div">
+        <div class="dos_pagina">
+            <img src="IMAGENES DEL CATALOGO/img4.png" alt="Wish 03">
+            <h2>WISH 03</h2>
+            <p>$5000</p>
+            <button type="submit"><span>Comprar</span></button>
+        </div>
+        <div class="tres_pagina">
+            <img src="IMAGENES DEL CATALOGO/img5.png" alt="Antena 01">
+            <h2>ANTENA 01</h2>
+            <p>$5000</p>
+            <button type="submit"><span>Comprar</span></button>
+        </div>
+        <div class="cuatro_pagina">
+            <img src="IMAGENES DEL CATALOGO/img6.png" alt="Antena 02">
+            <h2>ANTENA 02</h2>
+            <p>$5000</p>
+            <button type="submit"><span>Comprar</span></button>
+        </div>
+    </div>
+
+    <div class="div2">
+        <h2>LECTORES DE HUELLA</h2>
+    </div>
+    <div class="div3">
+        <div class="unotres">
+            <img src="IMAGENES DEL CATALOGO/img7.png" alt="Lector 01">
+            <h2>LECTOR 01</h2>
+            <p>$5000</p>
+            <button type="submit"><span>Comprar</span></button>
+        </div>
+        <div class="dostres">
+            <img src="IMAGENES DEL CATALOGO/img8.png" alt="Lector 02">
+            <h2>LECTOR 02</h2>
+            <p>$5000</p>
+            <button type="submit"><span>Comprar</span></button>
+        </div>
+        <div class="trestres">
+            <img src="IMAGENES DEL CATALOGO/img9.png" alt="Lector 03">
+            <h2>LECTOR 03</h2>
+            <p>$5000</p>
+            <button type="submit"><span>Comprar</span></button>
+        </div>
+    </div>
+
+    <div class="div4">
+        <div class="cuatrotres">
+            <img src="IMAGENES DEL CATALOGO/img10.png" alt="Lector 04">
+            <h2>LECTOR 04</h2>
+            <p>$5000</p>
+            <button type="submit"><span>Comprar</span></button>
+        </div>
+        <div class="cincotres">
+            <img src="IMAGENES DEL CATALOGO/img11.png" alt="Lector 05">
+            <h2>LECTOR 05</h2>
+            <p>$5000</p>
+            <button type="submit"><span>Comprar</span></button>
+        </div>
+    </div>
+
+    <div class="div3R">
+        <h2>SISTEMAS DE VIGILANCIA</h2>
+    </div>
+    <div class="ultimaparte">
+        <div class="seistres">
+            <img src="IMAGENES DEL CATALOGO/img12.png" alt="Cámara 01">
+            <h2>CÁMARA 01</h2>
+            <p>$5000</p>
+            <button type="submit"><span>Comprar</span></button>
+        </div>
+        <div class="sietetres">
+            <img src="IMAGENES DEL CATALOGO/img13.png" alt="Cámara 02">
+            <h2>CÁMARA 02</h2>
+            <p>$5000</p>
+            <button type="submit"><span>Comprar</span></button>
+        </div>
+    </div>
+
+    <footer>
+        <ul class="footer-icons">
+            <li><a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook"></i></a></li>
+            <li><a href="https://wa.me/1234567890" target="_blank"><i class="fab fa-whatsapp"></i></a></li>
+            <li><a href="mailto:correo@ejemplo.com"><i class="fas fa-envelope"></i></a></li>
+            <li><a href="tel:+1234567890"><i class="fas fa-phone"></i></a></li>
+        </ul>
+        <p>&copy; 2024 Red Sotecc. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        class ShoppingCart {
+            constructor() {
+                this.items = [];
+                this.initializeElements();
+                this.setupEventListeners();
+            }
+
+            initializeElements() {
+                this.cartIcon = document.querySelector('.cart-icon');
+                this.cartPanel = document.querySelector('.cart-panel');
+                this.cartItems = document.querySelector('.cart-items');
+                this.cartCount = document.querySelector('.cart-count');
+                this.totalAmount = document.querySelector('.total-amount');
+                this.closeCart = document.querySelector('.close-cart');
+                this.checkoutBtn = document.querySelector('.checkout-btn');
+
+                // Agregar evento de compra a todos los botones de productos
+                const buyButtons = document.querySelectorAll('button[type="submit"]');
+                buyButtons.forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const productDiv = button.parentElement;
+                        const product = {
+                            name: productDiv.querySelector('h2').textContent,
+                            price: parseInt(productDiv.querySelector('p').textContent.replace('$', '')),
+                            image: productDiv.querySelector('img').src
+                        };
+                        this.addItem(product);
+                        
+                        // Añadir animación de feedback
+                        button.innerHTML = '<i class="fas fa-check"></i> Añadido';
+                        button.style.backgroundColor = '#4CAF50';
+                        setTimeout(() => {
+                            button.innerHTML = '<span>Comprar</span>';
+                            button.style.backgroundColor = '#0e2a47';
+                        }, 1000);
+                    });
+                });
+            }
+
+            setupEventListeners() {
+                this.cartIcon.addEventListener('click', () => this.toggleCart());
+                this.closeCart.addEventListener('click', () => this.toggleCart());
+                this.checkoutBtn.addEventListener('click', () => this.checkout());
+
+                // Cerrar carrito al hacer clic fuera
+                document.addEventListener('click', (e) => {
+                    if (!this.cartPanel.contains(e.target) && 
+                        !this.cartIcon.contains(e.target) && 
+                        this.cartPanel.classList.contains('active')) {
+                        this.toggleCart();
+                    }
+                });
+            }
+
+            toggleCart() {
+                this.cartPanel.classList.toggle('active');
+            }
+
+            addItem(product) {
+                const existingItem = this.items.find(item => item.name === product.name);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    this.items.push({
+                        ...product,
+                        quantity: 1
+                    });
+                }
+                
+                this.updateCart();
+                this.showNotification(`${product.name} agregado al carrito`);
+            }
+
+            showNotification(message) {
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: #4CAF50;
+                    color: white;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    z-index: 1002;
+                    animation: fadeInOut 2s ease;
+                `;
+                notification.textContent = message;
+                document.body.appendChild(notification);
+
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 2000);
+            }
+
+            updateCart() {
+                this.cartItems.innerHTML = '';
+                this.cartCount.textContent = this.items.reduce((total, item) => total + item.quantity, 0);
+
+                if (this.items.length === 0) {
+                    this.cartItems.innerHTML = '<p class="empty-cart">El carrito está vacío</p>';
+                }
+
+                this.items.forEach(item => {
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'cart-item';
+                    itemElement.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}">
+                        <div class="cart-item-details">
+                            <h4>${item.name}</h4>
+                            <p>$${item.price}</p>
+                        </div>
+                        <div class="cart-item-quantity">
+                            <button class="quantity-btn minus">-</button>
+                            <span>${item.quantity}</span>
+                            <button class="quantity-btn plus">+</button>
+                            <button class="remove-item"><i class="fas fa-trash"></i></button>
+                        </div>
+                    `;
+
+                    const plusBtn = itemElement.querySelector('.plus');
+                    const minusBtn = itemElement.querySelector('.minus');
+                    const removeBtn = itemElement.querySelector('.remove-item');
+
+                    plusBtn.addEventListener('click', () => this.updateQuantity(item.name, 1));
+                    minusBtn.addEventListener('click', () => this.updateQuantity(item.name, -1));
+                    removeBtn.addEventListener('click', () => this.removeItem(item.name));
+
+                    this.cartItems.appendChild(itemElement);
+                });
+
+                const total = this.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                this.totalAmount.textContent = `$${total}`;
+            }
+
+            updateQuantity(itemName, delta) {
+                const item = this.items.find(item => item.name === itemName);
+                if (item) {
+                    item.quantity += delta;
+                    if (item.quantity <= 0) {
+                        this.removeItem(itemName);
+                    } else {
+                        this.updateCart();
+                    }
+                }
+            }
+
+            removeItem(itemName) {
+                this.items = this.items.filter(item => item.name !== itemName);
+                this.updateCart();
+                this.showNotification(`${itemName} eliminado del carrito`);
+            }
+
+            checkout() {
+                if (this.items.length === 0) {
+                    this.showNotification('El carrito está vacío');
+                    return;
+                }
+                
+                const total = this.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                const message = `¡Gracias por tu compra!\nTotal: $${total}\n\nResumen de tu pedido:\n${this.items.map(item => `${item.name} x${item.quantity} - $${item.price * item.quantity}`).join('\n')}`;
+                
+                alert(message);
+                this.items = [];
+                this.updateCart();
+                this.toggleCart();
+                this.showNotification('¡Compra realizada con éxito!');
+            }
+        }
+
+        // Inicializar el carrito cuando se carga la página
+        document.addEventListener('DOMContentLoaded', () => {
+            const cart = new ShoppingCart();
+
+            // Añadir animación al pasar el mouse por los productos
+            const products = document.querySelectorAll('.inicio_pagina, .dosdiv, .tercerdiv, .dos_pagina, .tres_pagina, .cuatro_pagina, .unotres, .dostres, .trestres, .cuatrotres, .cincotres, .seistres, .sietetres');
+            
+            products.forEach(product => {
+                product.addEventListener('mouseover', () => {
+                    product.style.transform = 'translateY(-5px)';
+                    product.style.transition = 'transform 0.3s ease';
+                });
+                
+                product.addEventListener('mouseout', () => {
+                    product.style.transform = 'translateY(0)';
+                });
+            });
+        });
+
+        // Añadir estilos para la animación de notificación
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInOut {
+                0% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+                15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+                85% { opacity: 1; transform: translateX(-50%) translateY(0); }
+                100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
